@@ -9,10 +9,9 @@
 
 const needle = require('needle');
 
+// fetches my Ip Address 
 const fetchMyIp = function(callback) {
-  const url = 'https://api.ipify.org?format=json';
-
-  needle.get(url, (error, response) => {
+  needle.get('https://api.ipify.org?format=json', (error, response) => {
     
     if (error) {
       callback(error, null);
@@ -35,4 +34,31 @@ const fetchMyIp = function(callback) {
   });
 };
 
-module.exports = { fetchMyIp };
+// takes in an IP address and returns the latitude and longitude for it.
+const fetchCoordsByIp = function(ip, callback) {
+  needle.get(`http://ipwho.is/${ip}`, (error, response, body) => {
+        
+    if (error) {
+      callback(error, null);
+      return;
+    }
+
+    if (!body.success) {
+      const message = `Success status was ${body.success}. Server message says: ${body.message} when fetching for IP ${body.ip}`;
+      callback(Error(message), null);
+      return;
+    } 
+
+    const latitude = body.latitude; 
+    const longitude = body.longitude; 
+    callback(null, {latitude, longitude});
+  });
+};
+
+
+
+
+module.exports =  { fetchMyIp,
+                    fetchCoordsByIp
+                  };
+
