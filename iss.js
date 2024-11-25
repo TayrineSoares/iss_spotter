@@ -18,7 +18,7 @@ const fetchMyIp = function(callback) {
       callback(error, null);
       return;
     }
-
+    
     // if non-200 status, assume server error
     if (response.statusCode !== 200) {
       const msg = `Status Code ${response.statusCode} when fetching IP. Response: ${response.body}`;
@@ -26,9 +26,11 @@ const fetchMyIp = function(callback) {
       return;
     }
 
-    if (response) {
+    if (response.body.ip) {
       const ip = response.body.ip;
       callback(null, ip);
+    } else {
+      callback(Error('IP address not found in the response body'), null);
     }
   });
 };
