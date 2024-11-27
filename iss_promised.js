@@ -47,7 +47,6 @@ const nextISSTimesForMyLocation = function() {
 };
 
 
-
 module.exports = { nextISSTimesForMyLocation };
 
 

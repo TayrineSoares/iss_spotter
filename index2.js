@@ -12,4 +12,7 @@ const printFlyTimes = function(passTimes) {
 nextISSTimesForMyLocation()
   .then(flyTimes => {
     printFlyTimes(flyTimes);
+  })
+  .catch((error) => {
+    console.log("It didn't work: ", error.message);
   });
