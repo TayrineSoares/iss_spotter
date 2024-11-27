@@ -7,6 +7,7 @@ const fetchMyIP = function() {
     .then((response) => {
       const ip = response.body.ip; //Extract the IP address from the response body
       return ip;
+      
     });
   };
 
@@ -34,6 +35,21 @@ const fetchISSFlyOverTimes = function(coords) {
   });
 }
 
-module.exports = { fetchMyIP, fetchCoordsByIP, fetchISSFlyOverTimes };
+
+// Instead of exporting each of these 3 functions from iss_promised.js, let's simply export a function nextISSTimesForMyLocation which chains these function calls for us and returns the final results.
+const nextISSTimesForMyLocation = function() {
+  return fetchMyIP()
+    .then((ip) => fetchCoordsByIP(ip))
+    .then((coords) => fetchISSFlyOverTimes(coords))
+    .then((flyTimes) => {
+      return flyTimes;
+    });
+};
+
+
+
+module.exports = { nextISSTimesForMyLocation };
+
+
 
 
