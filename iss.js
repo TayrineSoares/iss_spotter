@@ -55,7 +55,7 @@ const fetchCoordsByIp = function(ip, callback) {
   });
 };
 
-
+// takes ithe latitude and longitude and returns the flying over times.
 const fetchISSFlyOverTimes = function(coords, callback) {
   
   needle.get(`https://iss-flyover.herokuapp.com/json/?lat=${coords.latitude}&lon=${coords.longitude}`, (error, response, body) => {
